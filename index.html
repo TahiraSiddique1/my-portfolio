@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Black & Golden — Portfolio | Your Name</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#070707; /* deep black */
+      --card:#0f0f0f;
+      --gold:#d4af37; /* warm gold */
+      --muted:#9b9b9b;
+      --glass: rgba(255,255,255,0.03);
+      --accent: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(212,175,55,0.02));
+      --radius:16px;
+      --transition: 400ms cubic-bezier(.2,.9,.2,1);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;background:radial-gradient(1200px 600px at 10% 10%, rgba(212,175,55,0.03), transparent), var(--bg);color:#fff;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;line-height:1.5;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block}
+    a{color:var(--gold);text-decoration:none}
+
+    /* Layout */
+    .container{max-width:1100px;margin:0 auto;padding:28px}
+    header{position:sticky;top:14px;z-index:40}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;padding:6px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#b38a2d);display:grid;place-items:center;color:#080808;font-weight:800;font-family:'Playfair Display';box-shadow:0 6px 18px rgba(0,0,0,.6)}
+    nav ul{display:flex;gap:18px;align-items:center}
+    nav li{list-style:none}
+    .btn-primary{background:var(--gold);color:#070707;padding:10px 14px;border-radius:10px;font-weight:600;box-shadow:0 8px 18px rgba(212,175,55,0.12);transition:transform var(--transition), box-shadow var(--transition)}
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 36px rgba(212,175,55,0.14)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center;padding:80px 0}
+    .hero-left h1{font-family:'Playfair Display';font-weight:700;font-size:48px;margin:0 0 12px;background:linear-gradient(90deg,var(--gold),#e7c86a);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .type{color:var(--muted);font-weight:600}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:var(--radius);padding:32px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02), 0 10px 30px rgba(0,0,0,.6)}
+    .avatar{width:100%;height:300px;border-radius:15px;background:linear-gradient(180deg, rgba(212,175,55,0.12), rgba(255,255,255,0.02));display:grid;place-items:center;font-size:28px;color:var(--muted)}
+
+    /* sections */
+    section{padding:60px 0;border-top:1px solid rgba(255,255,255,0.02)}
+    .section-title{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+    .section-title h2{margin:0;font-family:'Playfair Display';letter-spacing:0.2px}
+    .section-title .line{height:2px;background:linear-gradient(90deg,var(--gold),transparent);flex:1;border-radius:4px}
+
+    /* About & Education */
+    .about-grid{display:grid;grid-template-columns:1fr 360px;gap:28px}
+    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,.6);border:1px solid rgba(212,175,55,0.06)}
+    .edu-item{padding:12px;border-radius:10px;margin-bottom:12px;background:var(--glass);border-left:4px solid rgba(212,175,55,0.08)}
+
+    /* Services */
+    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .service{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(212,175,55,0.02), transparent);transition:transform var(--transition), box-shadow var(--transition);border:1px solid rgba(255,255,255,0.03)}
+    .service:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,.7)}
+
+    /* Portfolio Grid */
+    .portfolio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .work{position:relative;border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,0.04)}
+    .work .meta{position:absolute;left:12px;bottom:12px;background:linear-gradient(90deg, rgba(0,0,0,0.6), transparent);padding:8px 12px;border-radius:10px}
+
+    /* Contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 420px;gap:24px}
+    .form-row{display:flex;gap:10px}
+    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:10px;color:#fff;outline:none}
+    textarea{min-height:140px;resize:vertical}
+    .small{font-size:13px;color:var(--muted)}
+
+    footer{padding:26px 0;text-align:center;color:var(--muted);font-size:13px}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;place-items:center;background:linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.8));z-index:60}
+    .modal.open{display:grid}
+    .modal-card{max-width:880px;width:92%;background:linear-gradient(180deg, rgba(15,15,15,0.95), rgba(10,10,10,0.95));padding:20px;border-radius:14px}
+
+    /* tiny utils */
+    .flex{display:flex}
+    .center{align-items:center}
+    .gap12{gap:12px}
+
+    /* responsiveness */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .about-grid{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr}
+      nav ul{display:none}
+    }
+
+    /* Animated accents */
+    @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+    .float{animation:floaty 6s ease-in-out infinite}
+    @keyframes shine{0%{background-position:-200%}100%{background-position:200%}}
+    .shine-text{background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(212,175,55,0.3), rgba(255,255,255,0.06));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 3s linear infinite}
+
+    /* subtle entrance */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity 600ms var(--transition), transform 600ms var(--transition)}
+    .reveal.show{opacity:1;transform:translateY(0)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="nav">
+        <div class="brand">
+          <div class="logo">Y</div>
+          <div>
+            <div style="font-weight:700">Tahira Siddique</div>
+            <div class="small">GIS Analyst • WebGIS Developer • Business Analyst</div>
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact" class="btn-primary">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-left">
+          <div class="hero-card reveal show">
+            <h1 class="shine-text">Hi, I'm TAHIRA SIDDIQUE.</h1>
+            <div class="type">I design smart geospatial experiences — analysis, visualization & applications</div>
+            <p class="small" style="margin-top:14px">Specialized in transforming spatial data into intelligent, interactive, and decision-driven solutions</p>
+            <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+              <a href="#portfolio" class="btn-primary">View Work</a>
+              <a href="#contact" class="small" style="align-self:center;border-radius:10px;padding:10px 12px;background:rgba(255,255,255,0.02)">Hire me</a>
+            </div>
+            <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+              <div class="small">Available for freelance</div>
+              <div style="width:1px;height:18px;background:rgba(255,255,255,0.03)"></div>
+              <div class="small">Based in: Islamabad</div>
+            </div>
+          </div>
+        </div>
+        <aside class="hero-card float reveal show">
+          
+          <div class="avatar">
+            <img src="C:\Users\User\Downloads\my.jpg" alt="Your portrait">
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:29px">
+            <div class="small">3+ yrs Experience</div>
+            <div class="small">Available for remote</div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="about">
+        <div class="section-title">
+          <h2>About</h2>
+          <div class="line"></div>
+        </div>
+        <div class="about-grid">
+          <div>
+            <div class="card reveal show">
+              <h3 style="margin-top:0">Brief</h3>
+              <p class="small">I’m a GIS Engineer who transforms spatial data into intelligent maps and applications. With expertise in geospatial analysis, visualization, and web GIS, I craft solutions that drive smarter decisions. Passionate about merging geography with technology to create impactful digital experiences.</p>
+
+              <h4 style="margin-top:14px">Skills</h4>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+                <span class="small" style="padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02)">Spatial Data Analysis & Visualization</span>
+                <span class="small" style="padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02)">Web & Mobile GIS Development</span>
+                <span class="small" style="padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02)">Remote Sensing & Image Processing</span>
+                <span class="small" style="padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02)">Database Management (SQL, PostGIS, MongoDB)</span>
+                <span class="small" style="padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02)">Programming (Python, JavaScript, React, Leaflet, ArcGIS API)</span>
+              </div>
+
+            </div>
+
+            <section id="education" style="margin-top:18px">
+              <div class="card reveal show">
+                <h3 style="margin-top:0">Education</h3>
+                <div class="edu-item">
+                  <div style="display:flex;justify-content:space-between"><strong>Bachelor of Engineering - Geoinformatics </strong><span class="small">2020 - 2024</span></div>
+                  <div class="small">National University of Science and Technology (NUST) • Islamabad</div>
+                </div>
+    
+              </div>
+            </section>
+
+          </div>
+
+          <div>
+            <div class="card reveal show">
+              <h3 style="margin-top:0">Quick Facts</h3>
+              <ul class="small">
+                <li>Led frontend for 10+ production apps</li>
+                <li>Experience with remote, cross-functional teams</li>
+                <li>Open-source contributor</li>
+              </ul>
+              <div style="margin-top:12px">
+                <a class="small" href="#contact">Let's talk →</a>
+              </div>
+            </div>
+
+            <div style="margin-top:16px" class="card reveal show">
+              <h4 style="margin-top:0">Awards & Recognition</h4>
+              <div class="small">Rector’s Gold Medal in Final Year Design Project 2024</div>
+              <div class="small" style="margin-top:8px"> Industrial 1st Award in Final Year Design Project 2024</div>
+               <div class="small" style="margin-top:8px">  High Achiever and Full Merit Scholarship in HSSC 2019</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services">
+        <div class="section-title">
+          <h2>Services</h2>
+          <div class="line"></div>
+        </div>
+        <div class="services">
+          <div class="service reveal show">
+            <h4 style="margin:0">WebGIS Development</h4>
+            <p class="small">Responsive, accessible, and high-performance websites and SPAs using modern frameworks.</p>
+          </div>
+          <div class="service reveal show">
+            <h4 style="margin:0">UI / UX Design</h4>
+            <p class="small">Design systems, prototypes, micro-interactions and visual identities.</p>
+          </div>
+          <div class="service reveal show">
+            <h4 style="margin:0">Geospatial Visualization</h4>
+            <p class="small">Maps, spatial analysis, dashboards and geospatial APIs.</p>
+          </div>
+          <div class="service reveal show">
+            <h4 style="margin:0">Consulting & Mentoring</h4>
+            <p class="small">Technical guidance for product teams and junior developers.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio">
+        <div class="section-title">
+          <h2>Portfolio</h2>
+          <div class="line"></div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+          <button class="small" data-filter="all">All</button>
+          <button class="small" data-filter="web">Web</button>
+          <button class="small" data-filter="ui">UI</button>
+          <button class="small" data-filter="map">Mapping</button>
+        </div>
+        <div class="portfolio-grid">
+          <div class="work" data-type="web" onclick="openModal(this)">
+            <img src="https://images.unsplash.com/photo-1531497865142-726fbd3a1b3f?auto=format&fit=crop&w=800&q=60" alt="Project 1">
+            <div class="meta"><strong>Project One</strong><div class="small">E‑commerce SPA</div></div>
+          </div>
+          <div class="work" data-type="ui" onclick="openModal(this)">
+            <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f?auto=format&fit=crop&w=800&q=60" alt="Project 2">
+            <div class="meta"><strong>Brand UI</strong><div class="small">Design System</div></div>
+          </div>
+          <div class="work" data-type="map" onclick="openModal(this)">
+            <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=60" alt="Project 3">
+            <div class="meta"><strong>Mapping Tool</strong><div class="small">Geospatial dashboard</div></div>
+          </div>
+          <div class="work" data-type="web" onclick="openModal(this)">
+            <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=60" alt="Project 4">
+            <div class="meta"><strong>Portfolio Site</strong><div class="small">Personal website</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="section-title">
+          <h2>Contact</h2>
+          <div class="line"></div>
+        </div>
+        <div class="contact-grid">
+          <div class="card">
+            <form id="contactForm" onsubmit="return handleSubmit(event)">
+              <div class="form-row">
+                <input name="name" placeholder="Your name" required />
+                <input name="email" placeholder="Email" type="email" required />
+              </div>
+              <div style="margin-top:12px">
+                <input name="subject" placeholder="Subject" />
+              </div>
+              <div style="margin-top:12px">
+                <textarea name="message" placeholder="Message" required></textarea>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:12px;align-items:center">
+                <button class="btn-primary" type="submit">Send Message</button>
+                <div class="small">Or email me at <a href="mailto:you@domain.com">tahirasiddique01@gmail.com</a></div>
+              </div>
+            </form>
+          </div>
+
+          <aside class="card">
+            <h4 style="margin-top:0">Get in touch</h4>
+            <div class="small">I'm open to freelance projects, full-time roles and collaborations. Tell me about your project and timeline.</div>
+            <div style="margin-top:16px">
+              <div class="small"><strong>Phone</strong><div>+92 332 5155477</div></div>
+              <div style="height:12px"></div>
+              <div class="small"><strong>Location</strong><div>Islamabad, Pakistan</div></div>
+            </div>
+            <div style="margin-top:16px;display:flex;gap:10px">
+              <a class="small" href="hlinkedin.com/in/tahira-siddique">LinkedIn</a>
+              <a class="small" href="https://github.com/TahiraSiddique1">GitHub</a>
+              
+            </div>
+          </aside>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      © <span id="2025"></span> Tahira Siddique
+    </footer>
+  </div>
+
+  <!-- Modal for portfolio -->
+  <div id="modal" class="modal" onclick="closeModal(event)">
+    <div class="modal-card" id="modalCard" onclick="event.stopPropagation()">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong id="modalTitle">Project Title</strong>
+        <button onclick="closeModal()" class="small" style="background:transparent;border:none;color:var(--muted);cursor:pointer">Close</button>
+      </div>
+      <div id="modalBody" style="margin-top:12px">
+        <img id="modalImg" src="" alt="" style="border-radius:10px;max-height:420px;object-fit:cover;width:100%"/>
+        <p class="small" style="margin-top:12px">Project description goes here. Explain the problem, tech used, your role and outcome.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // small helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // reveal on load (simple)
+    window.addEventListener('load', ()=>{
+      document.querySelectorAll('.reveal').forEach((el,i)=>{setTimeout(()=>el.classList.add('show'), i*80)});
+    });
+
+    // Portfolio modal
+    function openModal(el){
+      const img = el.querySelector('img');
+      const title = el.querySelector('.meta strong').textContent;
+      document.getElementById('modalImg').src = img.src;
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modal').classList.add('open');
+    }
+    function closeModal(e){
+      document.getElementById('modal').classList.remove('open');
+    }
+
+    // Filtering
+    document.querySelectorAll('[data-filter]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const f=btn.getAttribute('data-filter');
+        document.querySelectorAll('.work').forEach(w=>{
+          w.style.display = (f==='all' || w.dataset.type===f) ? 'block' : 'none';
+        });
+      });
+    });
+
+    // Contact form handler (demo: shows toast and resets)
+    function handleSubmit(e){
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      // Demo behaviour: open mailto as fallback
+      const mailto = `mailto:you@domain.com?subject=${encodeURIComponent(data.get('subject')||'New message from portfolio')}&body=${encodeURIComponent('Name: '+data.get('name')+'\n\n'+data.get('message'))}`;
+      // try opening mail client
+      window.location.href = mailto;
+      form.reset();
+      alert('Opened your mail client. Or copy email: tahirasiddique01@gmail.com');
+      return false;
+    }
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+
+    // small keyboard accessibility for modal
+    document.addEventListener('keydown', e=>{
+      if(e.key==='Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
